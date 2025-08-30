@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderMessage",
+  "type": "object",
+  "required": [
+    "order_uid",
+    "track_number",
+    "entry",
+    "delivery",
+    "payment",
+    "items",
+    "locale",
+    "customer_id",
+    "delivery_service",
+    "shardkey",
+    "sm_id",
+    "date_created",
+    "oof_shard"
+  ],
+  "properties": {
+    "order_uid": { "type": "string" },
+    "track_number": { "type": "string" },
+    "entry": { "type": "string" },
+    "delivery": {
+      "type": "object",
+      "required": ["name", "phone", "zip", "city", "address", "region", "email"],
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "zip": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "region": { "type": "string" },
+        "email": { "type": "string", "format": "email" }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "required": ["transaction", "currency", "provider", "amount", "payment_dt", "bank", "delivery_cost", "goods_total", "custom_fee"],
+      "properties": {
+        "transaction": { "type": "string" },
+        "request_id": { "type": "string" },
+        "currency": { "type": "string" },
+        "provider": { "type": "string" },
+        "amount": { "type": "number" },
+        "payment_dt": { "type": "integer" },
+        "bank": { "type": "string" },
+        "delivery_cost": { "type": "number" },
+        "goods_total": { "type": "number" },
+        "custom_fee": { "type": "number" }
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["chrt_id", "track_number", "price", "rid", "name", "sale", "size", "total_price", "nm_id", "brand", "status"],
+        "properties": {
+          "chrt_id": { "type": "integer" },
+          "track_number": { "type": "string" },
+          "price": { "type": "number" },
+          "rid": { "type": "string" },
+          "name": { "type": "string" },
+          "sale": { "type": "integer" },
+          "size": { "type": "string" },
+          "total_price": { "type": "number" },
+          "nm_id": { "type": "integer" },
+          "brand": { "type": "string" },
+          "status": { "type": "integer" }
+        }
+      }
+    },
+    "locale": { "type": "string" },
+    "internal_signature": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "delivery_service": { "type": "string" },
+    "shardkey": { "type": "string" },
+    "sm_id": { "type": "integer" },
+    "date_created": { "type": "string", "format": "date-time" },
+    "oof_shard": { "type": "string" }
+  }
+}

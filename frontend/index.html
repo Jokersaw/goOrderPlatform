@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Your Order</h1>
+        <div>
+            <input type="text" id="orderId" placeholder="Enter Order ID" />
+            <button onclick="fetchOrder()">Get Order</button>
+        </div>
+        <h2>Result:</h2>
+        <pre id="result">{}</pre>
+    </div>
+
+    <script>
+        async function fetchOrder() {
+            const orderId = document.getElementById("orderId").value.trim();
+            const resultElem = document.getElementById("result");
+
+            if (!orderId) {
+                alert("Please enter an order ID");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/order/${orderId}`);
+                if (!response.ok) {
+                    resultElem.textContent = `Error: ${response.status} ${response.statusText}`;
+                    return;
+                }
+                const data = await response.json();
+                resultElem.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                resultElem.textContent = `Error: ${err.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
